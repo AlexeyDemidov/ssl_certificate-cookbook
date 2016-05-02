@@ -14,7 +14,7 @@ self.class.send(:include, Chef::SslCertificateCookbook::ServiceHelpers)
   SSLCertificateKeyFile <%= @ssl_key %>
   <% if @ssl_chain.is_a?(String) -%>
     <%- if node['apache']['version'] == '2.4' -%>
-      SSLCertificateFile <%= @ssl_chain %>
+      SSLCertificateFile <%= @ssl_chain_combined %>
     <% else -%>
       SSLCertificateChainFile <%= @ssl_chain %>
     <% end -%>
