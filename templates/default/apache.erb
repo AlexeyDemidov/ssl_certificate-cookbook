@@ -8,10 +8,16 @@ self.class.send(:include, Chef::SslCertificateCookbook::ServiceHelpers)
 
   SSLEngine on
 
+  <%- if node['apache']['version'] != '2.4' -%>
   SSLCertificateFile <%= @ssl_cert %>
+  <% end -%>
   SSLCertificateKeyFile <%= @ssl_key %>
   <% if @ssl_chain.is_a?(String) -%>
-  SSLCertificateChainFile <%= @ssl_chain %>
+    <%- if node['apache']['version'] == '2.4' -%>
+      SSLCertificateFile <%= @ssl_chain %>
+    <% else -%>
+      SSLCertificateChainFile <%= @ssl_chain %>
+    <% end -%>
   <% end -%>
 
   <% if @ssl_config[:description].is_a?(String) -%>
